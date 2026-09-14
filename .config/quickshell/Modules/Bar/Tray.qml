@@ -4,17 +4,17 @@ import Quickshell
 import Quickshell.Services.SystemTray
 import QtQuick
 import QtQuick.Layouts
-import "../config.js" as Config
+import qs.Config
 
 Rectangle {
     id: root
     required property var panelWindow
 
     implicitWidth: tray.implicitWidth + 24
-    implicitHeight: 34
+    implicitHeight: Config.barSize
 
-    radius: 10
-    color: Config.colors.base
+    radius: Config.rounding
+    color: Colors.base
 
     visible: SystemTray.items.values.length > 0
 

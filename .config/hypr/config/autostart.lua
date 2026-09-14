@@ -8,7 +8,8 @@ local is_laptop = require "utils".is_laptop()
 local exec = hl.exec_cmd
 
 hl.on("hyprland.start", function()
-    exec("waybar")
+    exec("systemctl --user restart xdg-desktop-portal.service")
+    exec("qs -p ~/.config/quickshell/shell.qml")
     exec("hyprpaper")
     exec("udiskie")
     exec("wl-paste --watch cliphist store")
@@ -20,7 +21,7 @@ hl.on("hyprland.start", function()
 end)
 
 hl.on("config.reloaded", function()
-    exec("pkill waybar; waybar")
+    exec("pkill qs; qs -p ~/.config/quickshell/shell.qml")
     if is_laptop then
         exec("pkill hypridle; hypridle")
     end

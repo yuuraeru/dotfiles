@@ -313,7 +313,8 @@
             "ignoreChannels": "",
             "ignoreGuilds": "",
             "showEditDiffs": false,
-            "separatedDiffs": false
+            "separatedDiffs": false,
+            "logDeletedAttachments": true
         },
         "MoreQuickReactions": {
             "enabled": false
@@ -928,7 +929,8 @@
             "enabled": false
         },
         "PlatformSpoofer": {
-            "enabled": false
+            "enabled": false,
+            "platform": "desktop"
         },
         "PolishWording": {
             "enabled": false
@@ -1210,8 +1212,8 @@
         },
         "FakeDeafen": {
             "enabled": true,
-            "showButton": true,
-            "enableKeybind": false,
+            "showButton": false,
+            "enableKeybind": true,
             "fakeMute": true,
             "fakeDeafen": true
         },
@@ -1265,6 +1267,9 @@
         },
         "NoticesAPI": {
             "enabled": true
+        },
+        "VoiceMessagesInBackground": {
+            "enabled": false
         }
     },
     "uiElements": {
@@ -1282,7 +1287,7 @@
         "authenticated": false,
         "url": "https://cloud.equicord.org/",
         "settingsSync": false,
-        "settingsSyncVersion": 1786934922459
+        "settingsSyncVersion": 1789378751774
     },
     "ignoreResetWarning": false,
     "userCssVars": {},

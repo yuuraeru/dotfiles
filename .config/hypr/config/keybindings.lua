@@ -10,12 +10,14 @@ local utils = require("utils")
 local terminal = "kitty"
 local file_manager = "nemo"
 local browser = "librewolf"
-local launcher = "pkill rofi || rofi -show drun -calc-command \"wl-copy -- '{result}'\""
-local clipboard = "pkill rofi || sh $HOME/.local/bin/cliphistory"
-local emoji = "pkill rofi || rofi -show emoji"
-local notification_center = "swaync -t -sw"
+local launcher = "qs ipc call launcher toggle"
+local clipboard = "qs ipc call clipboard toggle"
+local emoji = "qs ipc call emoji toggle"
+local notification_center = "qs ipc call notification toggle"
 local color_picker = "hyprpicker -an"
 local grimblast = "~/.local/bin/grimblast -nf"
+local wallpaper_manager = "qs ipc call wallpapermanager toggle"
+
 local screenshot_template = "~/Pictures/Screenshots/Screenshot_$(date +%Y%m%d_%H%M%S).png"
 
 local bind = hl.bind
@@ -29,6 +31,7 @@ bind("SUPER + V", exec(clipboard))
 bind("SUPER + PERIOD", exec(emoji))
 bind("SUPER + SHIFT + N", exec(notification_center))
 bind("SUPER + SHIFT + C", exec(color_picker))
+bind("SUPER + SHIFT + W", exec(wallpaper_manager))
 
 bind("F11", hl.dsp.window.fullscreen())
 bind("SUPER + F11", hl.dsp.window.fullscreen { mode = "maximized" })
@@ -54,36 +57,36 @@ bind("SUPER + Z", exec("pamixer --default-source -t"))
 bind("SUPER + Tab", utils.toggle_layout)
 
 local directions = {
-	{ "left", "H", -10, 0 },
-	{ "right", "L", 10, 0 },
-	{ "up", "K", 0, -10 },
-	{ "down", "J", 0, 10 },
+    { "left",  "H", -10, 0 },
+    { "right", "L", 10,  0 },
+    { "up",    "K", 0,   -10 },
+    { "down",  "J", 0,   10 },
 }
 
 for _, pair in ipairs(directions) do
-	local direction = pair[1]
-	local key = pair[2]
-	local x = pair[3]
-	local y = pair[4]
+    local direction = pair[1]
+    local key = pair[2]
+    local x = pair[3]
+    local y = pair[4]
 
-	local focus = hl.dsp.focus { direction = direction }
-	local move = hl.dsp.window.move { direction = direction }
-	local resize = hl.dsp.window.resize { x = x, y = y, relative = true }
+    local focus = hl.dsp.focus { direction = direction }
+    local move = hl.dsp.window.move { direction = direction }
+    local resize = hl.dsp.window.resize { x = x, y = y, relative = true }
 
-	bind("SUPER + " .. direction, focus)
-	bind("SUPER + " .. key, focus)
+    bind("SUPER + " .. direction, focus)
+    bind("SUPER + " .. key, focus)
 
-	bind("SUPER + SHIFT + " .. direction, move)
-	bind("SUPER + SHIFT + " .. key, move)
+    bind("SUPER + SHIFT + " .. direction, move)
+    bind("SUPER + SHIFT + " .. key, move)
 
-	bind("SUPER + ALT + " .. direction, resize, { repeating = true })
-	bind("SUPER + ALT + " .. key, resize, { repeating = true })
+    bind("SUPER + ALT + " .. direction, resize, { repeating = true })
+    bind("SUPER + ALT + " .. key, resize, { repeating = true })
 end
 
 for i = 1, 10 do
-	local key = i % 10
-	bind("SUPER + " .. key, hl.dsp.focus { workspace = i })
-	bind("SUPER + SHIFT + " .. key, hl.dsp.window.move { workspace = i })
+    local key = i % 10
+    bind("SUPER + " .. key, hl.dsp.focus { workspace = i })
+    bind("SUPER + SHIFT + " .. key, hl.dsp.window.move { workspace = i })
 end
 
 bind("SUPER + SHIFT + ALT + left", hl.dsp.workspace.move { monitor = "-1" })
@@ -97,15 +100,17 @@ bind("SUPER + mouse_up", hl.dsp.focus { workspace = "e-1" })
 bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
-bind("XF86Sleep", exec("pkill wlogout || wlogout"), { locked = true })
-bind(
-	"XF86AudioRaiseVolume",
-	exec("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
-	{ locked = true, repeating = true }
-)
-bind("XF86AudioLowerVolume", exec("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
 bind("XF86AudioMute", exec("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true })
+bind("XF86AudioRaiseVolume", exec("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+bind("XF86AudioLowerVolume", exec("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
+
 bind("XF86AudioMicMute", exec("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
+bind("SHIFT + XF86AudioRaiseVolume", exec("wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+"),
+    { locked = true, repeating = true })
+bind("SHIFT + XF86AudioLowerVolume", exec("wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"),
+    { locked = true, repeating = true })
+
+bind("XF86Sleep", exec("pkill wlogout || wlogout"), { locked = true })
 bind("XF86MonBrightnessUp", exec("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
 bind("XF86MonBrightnessDown", exec("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
 

@@ -1,6 +1,0 @@
-notify-send "This is the summary only"
-notify-send "This is the summary" "And this is the body."
-notify-send -u critical "ALERT" "MALWARE FOUND IN THE AUR."
-notify-send "Image Test" "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." --icon "$HOME/Downloads/arknights.jpg"
-notify-send "Image Test" "This notification has an image" --icon "$HOME/Downloads/endfield.png"
-notify-send "Image Test" "This notification has an image" --icon "$HOME/Downloads/genshin.png"

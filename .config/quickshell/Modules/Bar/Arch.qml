@@ -1,24 +1,26 @@
 import Quickshell
 import QtQuick
 import QtQuick.Layouts
-import "../config.js" as Config
+
+import qs.Config
+import qs.Services
 
 Rectangle {
     implicitWidth: archLogo.implicitWidth + 24
-    implicitHeight: 34
+    implicitHeight: Config.barSize
 
-    radius: 10
+    radius: Config.rounding
 
-    color: Config.colors.base
+    color: Colors.base
 
     Text {
         id: archLogo
         anchors.centerIn: parent
         text: "󰣇"
-        color: Config.colors.pink
+        color: Colors.blue
         font {
-            family: "JetBrainsMono Nerd Font"
-            pixelSize: 16
+            family: Fonts.icon
+            pixelSize: Fonts.iconSmall
             bold: true
         }
     }
@@ -26,6 +28,6 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: Quickshell.execDetached(["rofi", "-show", "drun"])
+        onClicked: LauncherService.toggle("AppLauncher")
     }
 }

@@ -2,16 +2,18 @@ import Quickshell
 import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
-import "../config.js" as Config
+import qs.Config
 
 Rectangle {
     id: root
-    required property var screen
-    implicitWidth: workspaces.implicitWidth
-    implicitHeight: 34
 
-    radius: 10
-    color: Config.colors.base
+    required property var screen
+
+    implicitWidth: workspaces.implicitWidth
+    implicitHeight: Config.barSize
+
+    radius: Config.rounding
+    color: Colors.base
 
     Row {
         id: workspaces
@@ -26,11 +28,11 @@ Rectangle {
                 required property var modelData
                 property bool urgent: Hyprland.toplevels.values.some(window => window.workspace?.id === wsContainer.modelData.id && window.urgent)
 
-                implicitWidth: wsText.implicitWidth + 24
-                implicitHeight: 34
-                radius: 10
+                implicitWidth: wsText.implicitWidth + 30
+                implicitHeight: Config.barSize
+                radius: Config.rounding
 
-                color: hover.hovered ? Qt.alpha(Config.colors.pink, 0.1) : "transparent"
+                color: hover.hovered ? Qt.alpha(Colors.pink, 0.1) : "transparent"
 
                 Behavior on color {
                     ColorAnimation {
@@ -44,11 +46,11 @@ Rectangle {
                     text: wsContainer.modelData.id
                     anchors.centerIn: parent
 
-                    color: wsContainer.modelData.active ? Config.colors.pink : wsContainer.urgent ? Config.colors.green : Qt.alpha(Config.colors.pink, 0.3)
+                    color: wsContainer.modelData.active ? Colors.pink : wsContainer.urgent ? Colors.green : Qt.alpha(Colors.pink, 0.3)
 
                     font {
-                        family: "JetBrainsMono Nerd Font"
-                        pixelSize: 16
+                        family: Fonts.normal
+                        pixelSize: Fonts.textNormal
                         bold: true
                     }
                 }
